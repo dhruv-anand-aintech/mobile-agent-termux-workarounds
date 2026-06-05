@@ -73,4 +73,8 @@ curl -fsSL https://aintech.link/all | bash
 
 ## Current Cursor Status
 
-On the tested phone, `cursor-agent --help` works after the sqlite replacement. `cursor-agent status` still reports `Not logged in` until you authenticate with `cursor-agent login` or provide `CURSOR_API_KEY`.
+On the tested phone, `cursor-agent --help` works after the sqlite replacement. After authenticating with `cursor-agent login`, `cursor-agent status`, `cursor-agent models`, and this headless smoke test also worked:
+
+```sh
+cursor-agent --print --trust --mode ask --model auto "Reply with exactly: CURSOR_ANDROID_OK"
+```
