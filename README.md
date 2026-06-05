@@ -68,9 +68,9 @@ curl -fsSL https://aintech.link/all | bash
 
 - `install-claude-code.sh`: installs Node.js, installs `@anthropic-ai/claude-code`, and wraps `claude` with Termux-safe temp directories.
 - `install-codex.sh`: installs Node.js and the Termux-compatible Codex package.
-- `install-opencode.sh`: installs the OpenCode Android aarch64 binary and wraps it with an Android tagged-pointer compatibility shim.
-- `install-cursor-agent.sh`: runs the Cursor Agent Termux installer, patches the Merkle native binding fallback, and adds GNU-style compatibility libraries needed by native modules.
+- `install-opencode.sh`: installs the OpenCode 1.15.13 Android aarch64 Termux package.
+- `install-cursor-agent.sh`: runs the Cursor Agent Termux installer, patches the Merkle native binding fallback, fixes Termux TLS cert lookup, and replaces the bundled Linux `node_sqlite3.node` with the Android-built sqlite3 module that the installer already compiles.
 
-## Current Cursor Caveat
+## Current Cursor Status
 
-Cursor Agent can still fail on Android if its bundled `node_sqlite3.node` asks for `libgcc_s.so.1`. That native module is not consistently available in Termux. The next durable fix is to rebuild or replace sqlite3 with an Android-compatible native module.
+On the tested phone, `cursor-agent --help` works after the sqlite replacement. `cursor-agent status` still reports `Not logged in` until you authenticate with `cursor-agent login` or provide `CURSOR_API_KEY`.

@@ -14,11 +14,10 @@ version_dir="$(find "$HOME/.local/share/cursor-agent/versions" -mindepth 1 -maxd
 index_js="$version_dir/index.js"
 
 mkdir -p "$PREFIX/etc/tls"
-if [ ! -e "$PREFIX/etc/tls/certs" ] && [ -d "$PREFIX/etc/tls/cert.pem" ]; then
-  rm -rf "$PREFIX/etc/tls/certs"
-fi
-if [ ! -e "$PREFIX/etc/tls/certs" ] && [ -d "$PREFIX/etc/ssl/certs" ]; then
-  ln -s "$PREFIX/etc/ssl/certs" "$PREFIX/etc/tls/certs"
+rm -rf "$PREFIX/etc/tls/certs"
+mkdir -p "$PREFIX/etc/tls/certs"
+if [ -f "$PREFIX/etc/tls/cert.pem" ]; then
+  ln -sf "$PREFIX/etc/tls/cert.pem" "$PREFIX/etc/tls/certs/cert.pem"
 fi
 
 ln -sf "$PREFIX/lib/libc++_shared.so" "$PREFIX/lib/libstdc++.so.6"
@@ -40,6 +39,13 @@ fi
 if ! find "$PREFIX" -name 'libgcc_s.so.1' -print -quit | grep -q .; then
   echo "warning: libgcc_s.so.1 is not present in this Termux prefix."
   echo "Cursor may still fail while loading node_sqlite3.node."
+fi
+
+rebuilt_sqlite="$version_dir/node_modules/sqlite3/build/Release/node_sqlite3.node"
+bundled_sqlite="$version_dir/node_sqlite3.node"
+if [ -s "$rebuilt_sqlite" ]; then
+  cp -f "$bundled_sqlite" "$bundled_sqlite.linux-gnu.bak" || true
+  cp -f "$rebuilt_sqlite" "$bundled_sqlite"
 fi
 
 node - "$index_js" <<'NODE'
