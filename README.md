@@ -5,7 +5,7 @@ Short Termux installers for mobile coding agents on Android.
 ## Codex
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/dhruv-anand-aintech/mobile-agent-termux-workarounds/main/scripts/termux/install-codex.sh | bash
+curl -fsSL https://aintech.link/codex | bash
 ```
 
 Then log in:
@@ -17,7 +17,7 @@ codex login
 ## OpenCode
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/dhruv-anand-aintech/mobile-agent-termux-workarounds/main/scripts/termux/install-opencode.sh | bash
+curl -fsSL https://aintech.link/opencode | bash
 ```
 
 Check:
@@ -29,7 +29,7 @@ opencode --version
 ## Cursor Agent
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/dhruv-anand-aintech/mobile-agent-termux-workarounds/main/scripts/termux/install-cursor-agent.sh | bash
+curl -fsSL https://aintech.link/cursor | bash
 ```
 
 Check:
@@ -41,7 +41,7 @@ cursor-agent --help
 ## Install All
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/dhruv-anand-aintech/mobile-agent-termux-workarounds/main/scripts/termux/install-all-agents.sh | bash
+curl -fsSL https://aintech.link/all | bash
 ```
 
 ## What These Scripts Do

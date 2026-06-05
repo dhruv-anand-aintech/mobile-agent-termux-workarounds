@@ -1,0 +1,8 @@
+name = "mobile-agent-termux-workarounds"
+main = "src/worker.ts"
+compatibility_date = "2026-06-05"
+workers_dev = false
+
+[[routes]]
+pattern = "aintech.link"
+custom_domain = true
