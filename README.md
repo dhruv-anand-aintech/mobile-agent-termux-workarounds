@@ -2,6 +2,8 @@
 
 Short Termux installers for mobile coding agents on Android.
 
+Shortlinks are served by the separate `aintech-link-shortlinks` Worker repo.
+
 ## Codex
 
 ```sh
