@@ -48,7 +48,7 @@ curl -fsSL https://raw.githubusercontent.com/dhruv-anand-aintech/mobile-agent-te
 
 - `install-codex.sh`: installs Node.js and the Termux-compatible Codex package.
 - `install-opencode.sh`: installs the OpenCode Android aarch64 binary and wraps it with an Android tagged-pointer compatibility shim.
-- `install-cursor-agent.sh`: runs the Cursor Agent Termux installer, patches the Merkle native binding fallback, and adds common library aliases needed by native modules.
+- `install-cursor-agent.sh`: runs the Cursor Agent Termux installer, patches the Merkle native binding fallback, and adds GNU-style compatibility libraries needed by native modules.
 
 ## Current Cursor Caveat
 

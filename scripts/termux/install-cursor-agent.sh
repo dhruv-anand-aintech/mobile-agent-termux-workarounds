@@ -23,10 +23,19 @@ fi
 
 ln -sf "$PREFIX/lib/libc++_shared.so" "$PREFIX/lib/libstdc++.so.6"
 ln -sf "$PREFIX/lib/libc++_shared.so" "$PREFIX/lib/libstdc++.so"
-ln -sf /system/lib64/libm.so "$PREFIX/lib/libm.so.6"
-ln -sf /system/lib64/libc.so "$PREFIX/lib/libc.so.6"
-ln -sf /system/lib64/libdl.so "$PREFIX/lib/libdl.so.2"
-ln -sf /system/lib64/libpthread.so "$PREFIX/lib/libpthread.so.0"
+cat > "$HOME/empty-gnu-compat.c" <<'C'
+void __termux_gnu_compat_stub(void) {}
+C
+clang -shared -fPIC -Wl,-soname,libm.so.6 "$HOME/empty-gnu-compat.c" -o "$PREFIX/lib/libm.so.6"
+clang -shared -fPIC -Wl,-soname,libc.so.6 "$HOME/empty-gnu-compat.c" -o "$PREFIX/lib/libc.so.6"
+clang -shared -fPIC -Wl,-soname,libpthread.so.0 "$HOME/empty-gnu-compat.c" -o "$PREFIX/lib/libpthread.so.0"
+clang -shared -fPIC -Wl,-soname,libdl.so.2 "$HOME/empty-gnu-compat.c" -o "$PREFIX/lib/libdl.so.2"
+rm -f "$HOME/empty-gnu-compat.c"
+
+if [ -e "$PREFIX/glibc/lib/libgcc_s.so.1" ]; then
+  ln -sf "$PREFIX/glibc/lib/libgcc_s.so.1" "$PREFIX/lib/libgcc_s.so.1"
+  ln -sf "$PREFIX/glibc/lib/libgcc_s.so" "$PREFIX/lib/libgcc_s.so"
+fi
 
 if ! find "$PREFIX" -name 'libgcc_s.so.1' -print -quit | grep -q .; then
   echo "warning: libgcc_s.so.1 is not present in this Termux prefix."
