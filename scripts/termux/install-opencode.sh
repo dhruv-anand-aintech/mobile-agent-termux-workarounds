@@ -11,7 +11,7 @@ workdir="$(mktemp -d)"
 trap 'rm -rf "$workdir"' EXIT
 
 pkg update -y
-pkg install -y curl dpkg ripgrep
+pkg install -y curl dpkg openssl ripgrep
 
 cd "$workdir"
 curl -fL -o "$asset" "$url"
