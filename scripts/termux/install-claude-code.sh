@@ -19,7 +19,7 @@ fi
 if [ -n "$existing_claude" ] && "$existing_claude" --version >/dev/null 2>&1; then
   claude_path="$existing_claude"
 else
-  npm install -g @anthropic-ai/claude-code
+  npm install -g --allow-scripts=@anthropic-ai/claude-code @anthropic-ai/claude-code
 fi
 
 if [ -z "${claude_path:-}" ] && [ -x "$PREFIX/bin/claude" ]; then
