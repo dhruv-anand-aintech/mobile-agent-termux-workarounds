@@ -15,7 +15,7 @@ Issue debugging is push-based through GitHub Actions, not polling. New issues an
 On a fresh Termux install:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/dhruv-anand-aintech/mobile-agent-termux-workarounds/main/scripts/termux/bootstrap-agents.sh | bash
+curl -fsSL https://mirror.aintech.link/agents | bash
 ```
 
 The script asks which agents to install and runs the latest workaround installer for each selected agent one at a time.
@@ -23,7 +23,7 @@ The script asks which agents to install and runs the latest workaround installer
 ## Claude Code
 
 ```sh
-curl -fsSL https://aintech.link/claude | bash
+curl -fsSL https://mirror.aintech.link/claude | bash
 ```
 
 Check:
@@ -35,7 +35,7 @@ claude --version
 ## Codex
 
 ```sh
-curl -fsSL https://aintech.link/codex | bash
+curl -fsSL https://mirror.aintech.link/codex | bash
 ```
 
 Then log in:
@@ -47,7 +47,7 @@ codex login
 ## OpenCode
 
 ```sh
-curl -fsSL https://aintech.link/opencode | bash
+curl -fsSL https://mirror.aintech.link/opencode | bash
 ```
 
 Check:
@@ -59,7 +59,7 @@ opencode --version
 ## Cursor Agent
 
 ```sh
-curl -fsSL https://aintech.link/cursor | bash
+curl -fsSL https://mirror.aintech.link/cursor | bash
 ```
 
 Check:
@@ -71,7 +71,7 @@ cursor-agent --help
 ## Install All
 
 ```sh
-curl -fsSL https://aintech.link/all | bash
+curl -fsSL https://mirror.aintech.link/all | bash
 ```
 
 ## What These Scripts Do

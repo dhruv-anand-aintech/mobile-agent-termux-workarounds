@@ -21,6 +21,9 @@ setup_termux() {
   export TMP_DIR="${TMP_DIR:-$HOME/tmp}"
   export TEMP_DIR="${TEMP_DIR:-$HOME/tmp}"
   export PATH="$HOME/.local/bin:$PREFIX/bin:$PATH"
+
+  mkdir -p "$PREFIX/etc/apt"
+  printf 'deb https://packages.termux.dev/apt/termux-main stable main\n' > "$PREFIX/etc/apt/sources.list"
 }
 
 install_script() {
