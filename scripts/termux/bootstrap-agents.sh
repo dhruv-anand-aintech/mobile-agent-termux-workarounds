@@ -8,7 +8,10 @@ setup_termux() {
   chmod 700 "$HOME/tmp" 2>/dev/null || true
 
   if [ -f "$HOME/.termux/termux.properties" ]; then
-    sed -i 's/^# *allow-external-apps *= *true/allow-external-apps = true/' "$HOME/.termux/termux.properties"
+    tmp_properties="$HOME/.termux/termux.properties.tmp"
+    sed 's/^# *allow-external-apps *= *true/allow-external-apps = true/' \
+      "$HOME/.termux/termux.properties" > "$tmp_properties"
+    mv "$tmp_properties" "$HOME/.termux/termux.properties"
   fi
   grep -q '^allow-external-apps *= *true' "$HOME/.termux/termux.properties" 2>/dev/null || \
     printf '\nallow-external-apps = true\n' >> "$HOME/.termux/termux.properties"
@@ -49,6 +52,35 @@ next_command() {
   esac
 }
 
+is_installed() {
+  case "$1" in
+    claude)
+      command -v claude >/dev/null 2>&1 && claude --version >/dev/null 2>&1
+      ;;
+    codex)
+      command -v codex >/dev/null 2>&1 && codex --version >/dev/null 2>&1
+      ;;
+    opencode)
+      command -v opencode >/dev/null 2>&1 && opencode --version >/dev/null 2>&1
+      ;;
+    cursor)
+      command -v cursor-agent >/dev/null 2>&1 && \
+        LD_LIBRARY_PATH="$PREFIX/lib:${LD_LIBRARY_PATH:-}" cursor-agent --help >/dev/null 2>&1
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+}
+
+installed_status() {
+  if is_installed "$1"; then
+    printf 'installed'
+  else
+    printf 'not installed'
+  fi
+}
+
 run_installer() {
   agent="$1"
   script="$(install_script "$agent")"
@@ -72,17 +104,32 @@ choose_agents() {
 Mobile Agent Termux Setup
 
 Choose the agents to install. Each selected agent runs one at a time.
+Already-installed agents are skipped unless you choose to reinstall/repair them.
 
 Press Enter for the default shown in brackets.
 
 EOF
 
+  printf 'Current status:\n'
+  for agent in claude codex opencode cursor; do
+    printf '  %-13s %s\n' "$(agent_label "$agent"):" "$(installed_status "$agent")"
+  done
+  printf '\n'
+
   for agent in claude codex opencode cursor; do
     label="$(agent_label "$agent")"
+    if is_installed "$agent"; then
+      prompt="Reinstall/repair $label? [y/N] "
+      default_answer="n"
+    else
+      prompt="Install $label? [Y/n] "
+      default_answer="y"
+    fi
+
     while true; do
-      printf 'Install %s? [y/N] ' "$label"
-      IFS= read -r answer || answer=n
-      answer="${answer:-n}"
+      printf '%s' "$prompt"
+      IFS= read -r answer || answer="$default_answer"
+      answer="${answer:-$default_answer}"
       case "$answer" in
         y|Y|yes|YES|y*|Y*)
           SELECTED_AGENTS="${SELECTED_AGENTS:+$SELECTED_AGENTS }$agent"
