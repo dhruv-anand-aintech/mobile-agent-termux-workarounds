@@ -10,6 +10,16 @@ These workarounds are fragile and were written by Codex against real Android/Ter
 
 Issue debugging is push-based through GitHub Actions, not polling. New issues and `/codex-debug` comments can trigger a Codex workflow on a self-hosted Mac runner with `adb` and an optional Android emulator.
 
+## Guided Setup
+
+On a fresh Termux install:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/dhruv-anand-aintech/mobile-agent-termux-workarounds/main/scripts/termux/bootstrap-agents.sh | bash
+```
+
+The script asks which agents to install and runs the latest workaround installer for each selected agent one at a time.
+
 ## Claude Code
 
 ```sh
