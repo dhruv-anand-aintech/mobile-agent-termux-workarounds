@@ -16,7 +16,7 @@ workdir="$(mktemp -d)"
 trap 'rm -rf "$workdir"' EXIT
 
 pkg update -y
-pkg install -y curl dpkg openssl ripgrep
+pkg install -y curl dpkg openssl python ripgrep
 
 cd "$workdir"
 curl -fL -o "$asset" "$mirror_url" || curl -fL -o "$asset" "$url"
