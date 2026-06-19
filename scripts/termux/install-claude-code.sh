@@ -36,6 +36,13 @@ if [ -z "${claude_path:-}" ]; then
   exit 1
 fi
 
+if ! "$claude_path" --version >/dev/null 2>&1; then
+  claude_root="$(npm root -g)/@anthropic-ai/claude-code"
+  if [ -f "$claude_root/install.cjs" ]; then
+    (cd "$claude_root" && node install.cjs)
+  fi
+fi
+
 cat > "$HOME/.local/bin/claude" <<SH
 #!/data/data/com.termux/files/usr/bin/sh
 export TMPDIR="\${TMPDIR:-\$HOME/tmp}"
