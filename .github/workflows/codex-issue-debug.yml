@@ -13,8 +13,21 @@ permissions:
 jobs:
   debug:
     if: >
-      github.event_name == 'issues' ||
-      contains(github.event.comment.body, '/codex-debug')
+      (
+        github.event_name == 'issues' &&
+        (
+          contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.issue.author_association) ||
+          (github.event.action == 'labeled' && github.event.label.name == 'codex-debug')
+        )
+      ) ||
+      (
+        github.event_name == 'issue_comment' &&
+        contains(github.event.comment.body, '/codex-debug') &&
+        (
+          contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association) ||
+          contains(github.event.issue.labels.*.name, 'codex-debug')
+        )
+      )
     runs-on: [self-hosted, macOS, mobile-agent-debugger]
     timeout-minutes: 45
 
